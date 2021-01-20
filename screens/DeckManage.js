@@ -3,9 +3,15 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import CustomButton from '../components/CustomButton'
 import { connect } from 'react-redux'
-import { removeDeck } from '../actions/deck'
+import { getDeckFromIdFunc } from '../actions/deck'
 
 class DeckManage extends React.Component {
+
+    componentDidMount() {
+        const { route, navigation } = this.props
+        console.log('deck:', route.params)
+        this.props.getDeck(route.params.deckId)
+    }
 
     onPress = (url) => {
        this.props.navigation.navigate(`${url}`)
@@ -17,12 +23,21 @@ class DeckManage extends React.Component {
 
 
    render() {
+    const {deck} = this.props
        return ( 
+           <View>
            <View style={styles.container}>
-               <View>
-                    <Text>DECK1</Text>
-                    <Text>2 cards</Text>
-               </View>
+               {deck && (<View>
+                  <Text>{deck.name}</Text>
+                    { 
+                      deck.cards ? (
+                        <Text>{deck.cards.length} cards</Text>
+                      ) : (
+                        <Text>0 cards</Text>
+                      )
+                        
+                        }
+               </View>)}
             <View>
                 <CustomButton bgColor='white' onPress={() => this.onPress('AddCard')}>
                     <Text>Add Card</Text>
@@ -34,6 +49,7 @@ class DeckManage extends React.Component {
                     <Text style={{color:'red'}}>Delete Deck</Text>
                 </CustomButton>
              </View>
+           </View>
            </View>
        )
    }
@@ -54,13 +70,13 @@ const styles = StyleSheet.create({
  });
 
  const mapDispatchToProps = (dispatch, {navigation}) => ({
-     delete: cardId => dispatch(removeDeck(cardId)),
+    //  delete: cardId => dispatch(removeDeck(cardId)),
+    getDeck: id => dispatch(getDeckFromIdFunc(id))
     //  back: navigation.goBack()
  })
 
-//  const mapStateToProps = (dispatch, {navigation}) => ({
-//     delete: cardId => dispatch(removeDeckFunc(cardId)),
-//     back: navigation.goBack()
-// })
+ const mapStateToProps = ({deck}) => ({
+deck
+})
 
-export default connect(null, mapDispatchToProps)(DeckManage)
+export default connect(mapStateToProps, mapDispatchToProps)(DeckManage)

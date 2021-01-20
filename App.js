@@ -12,18 +12,20 @@ import { createStore } from 'redux'
 import reducer from './reducers'
 import thunk from 'redux-thunk'
 import { applyMiddleware } from 'redux'
+import AddDeck from './screens/AddDeck'
+import logger from 'redux-logger'
 
 
 const Stack = createStackNavigator()
 
 export default function App() {
   return (
-    <Provider store={createStore(reducer, applyMiddleware(thunk))}>
+    <Provider store={createStore(reducer, applyMiddleware(thunk, logger))}>
     <NavigationContainer>
         <Stack.Navigator>
             <Stack.Screen name="TabsNavigator" component={TabsNavigator}/>
             <Stack.Screen name="DeckManage" component={DeckManage}/>
-            <Stack.Screen name="AddCard" component={AddCard}/>
+            <Stack.Screen name="AddDeck" component={AddDeck}/>
         </Stack.Navigator>
     </NavigationContainer>
     </Provider>

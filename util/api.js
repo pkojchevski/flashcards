@@ -1,20 +1,19 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const DECKS_STORAGE_KEY = 'DECKS_STORAGE_KEY'
 
 export const fetchDecks = () => {
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then((decks) => decks)
-   
 }
 
-export const submitDeck = async ({deck, key}) => {
+export const submitDeck = async ({key, deck}) => {
     return await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, 
                 JSON.stringify({[key]:deck}))
 }
 
-export const getDeck = async (deckId) => { 
+export const getDeckFromIdApi = async (deckId) => { 
    return await AsyncStorage.getItem(DECKS_STORAGE_KEY)
-
 }
 
 

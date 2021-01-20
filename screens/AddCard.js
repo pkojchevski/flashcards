@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import FormInput from '../components/FormInput';
 import { connect } from 'react-redux'
-import { addCards } from '../actions/deck'
 
 
 class AddCard extends React.Component {
@@ -22,14 +21,13 @@ class AddCard extends React.Component {
 
     onSubmit = () => {
        const card = { id:Date.now().toISOString, ...this.state}
-       addCards(card)
     }
 
    render() {
        return (
            <View style={styles.container}>
                <FormInput placeholder='Question' onChangeText={this.onChangeQuestion}/>
-               <FormInput placeholder ='Answer'  onChangeText={this.onChangeAnswer}/>
+               <FormInput placeholder ='Answer' onChangeText={this.onChangeAnswer}/>
                <CustomButton bgColor="black" onPress={this.onSubmit}>
                     <Text style={{color: 'white'}}>Submit</Text>
                </CustomButton>
@@ -54,7 +52,7 @@ const styles = StyleSheet.create({
 
 
  const mapDispatchToProps = dispatch => ({
-     addCards: card => dispatch(addCards(card))
+   
  })
 
 

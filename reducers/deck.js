@@ -1,10 +1,22 @@
-import {ADD_DECK, REMOVE_DECK, ADD_CARD} from '../actions/DECK'
+import {ADD_DECK, REMOVE_DECK, ADD_CARD, GET_DECK_FROM_ID} from '../actions/deck'
 
 
-export const deck = (state={decks:[]}, action)  => {
+export const deck = (state={decks:{}, deck:null}, action)  => {
     switch(action.type) {
         case ADD_DECK: 
-            return state.decks.concat(action.deck)
+            return {
+                ...state,
+                decks: {
+                    ...state.decks,
+                    ...action.payload
+                }
+            }
+        case GET_DECK_FROM_ID: 
+        console.log(action.payload)
+            return {
+                ...state.decks,
+                deck:action.payload
+            }
         case REMOVE_DECK:
            return state.decks.filter(action.deckId)
         case ADD_CARD: 

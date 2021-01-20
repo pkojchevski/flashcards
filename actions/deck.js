@@ -5,7 +5,9 @@ export const GET_DECK = 'GET_DECK'
 export const GET_CARDS_FROM_DECK = 'GET_CARDS_FROM_DECK'
 export const ADD_CARD = 'ADD_CARD'
 export const REMOVE_CARD = 'REMOVE_CARD'
-import { fetchDecks, submitDecks  } from '../util/api'
+export const GET_DECK_FROM_ID = 'GET_DECK_FROM_ID'
+
+import { fetchDecks, submitDeck, getDeckFromIdApi } from '../util/api'
 
 const addCard = (card, deckName) => ({
      type: ADD_CARD,
@@ -42,22 +44,27 @@ const getDeck = deckName => ({
     payload:deckName
 })
 
+const getDeckFromId = deck => ({
+    type: GET_DECK,
+    payload:deck
+})
+
 export const addDeckFunc = (deck) => async (dispatch) => {
-   await submitDecks(deck)
+   await submitDeck(deck)
    dispatch(addDeck(deck))
 }
 
-
-
 export const getDecksFunc = () => dispatch => {
-    fetchDecks().then((decks) => {
+    return fetchDecks().then((decks) => {
         dispatch(getDecks(decks))
     })
 }
 
-
-
-
+export const getDeckFromIdFunc = (id) => async (dispatch) => {
+    const deck = await getDeckFromIdApi(id)
+    console.log('deckXXXXXXXXXX:', JSON.stringify(deck))
+    dispatch(getDeckFromId(deck))
+ }
 
 const getCardFromDeck = deckName => ({
     type: GET_CARD_FROM_DECK,
