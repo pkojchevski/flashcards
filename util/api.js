@@ -7,13 +7,17 @@ export const fetchDecks = () => {
     .then((decks) => decks)
 }
 
-export const submitDeck = async ({key, deck}) => {
+export const submitDeck = async (deck) => {
+   // console.log(deck)
     return await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, 
-                JSON.stringify({[key]:deck}))
+                JSON.stringify({[deck.id]:deck}))
 }
 
 export const getDeckFromIdApi = async (deckId) => { 
-   return await AsyncStorage.getItem(DECKS_STORAGE_KEY)
+   const decks = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    console.log(decks)
+    console.log('deckId:', deckId)
+   return decks[deckId]
 }
 
 

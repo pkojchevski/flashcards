@@ -12,9 +12,9 @@ export const deck = (state={decks:{}, deck:null}, action)  => {
                 }
             }
         case GET_DECK_FROM_ID: 
-        console.log(action.payload)
+        console.log('payload:',action.payload)
             return {
-                ...state.decks,
+                ...state,
                 deck:action.payload
             }
         case REMOVE_DECK:

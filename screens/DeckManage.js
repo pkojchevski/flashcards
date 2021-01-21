@@ -9,7 +9,6 @@ class DeckManage extends React.Component {
 
     componentDidMount() {
         const { route, navigation } = this.props
-        console.log('deck:', route.params)
         this.props.getDeck(route.params.deckId)
     }
 
@@ -23,6 +22,7 @@ class DeckManage extends React.Component {
 
 
    render() {
+     console.log('XXX:', this.props)
     const {deck} = this.props
        return ( 
            <View>

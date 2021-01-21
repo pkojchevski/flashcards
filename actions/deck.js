@@ -45,7 +45,7 @@ const getDeck = deckName => ({
 })
 
 const getDeckFromId = deck => ({
-    type: GET_DECK,
+    type: GET_DECK_FROM_ID,
     payload:deck
 })
 
@@ -62,7 +62,7 @@ export const getDecksFunc = () => dispatch => {
 
 export const getDeckFromIdFunc = (id) => async (dispatch) => {
     const deck = await getDeckFromIdApi(id)
-    console.log('deckXXXXXXXXXX:', JSON.stringify(deck))
+    console.log('deckXXXXXXXXXX:', deck)
     dispatch(getDeckFromId(deck))
  }
 
