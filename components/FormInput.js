@@ -29,10 +29,12 @@ const styles = StyleSheet.create({
         flexDirection:'row',
     },
     textInput:{
-        width:100,
+        width:"100%",
         padding:10,
         height: 40, 
         borderColor: 'black', 
-        borderWidth: 1 
+        borderWidth: 1,
+        marginTop:20,
+        marginBottom:20
     }
 })

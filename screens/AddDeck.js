@@ -27,7 +27,7 @@ class AddDeck extends React.Component {
 render() {
   return (
     <View style = {styles.container}>
-        <Text>What is title of your new deck?</Text>
+        <Text style={styles.title}>What is title of your new deck?</Text>
       <View>
         <FormInput placeholder="Deck Name" onChangeText={this.onDeckNameChanged}/>
         <CustomButton bgColor="black" onPress={this.onSubmit}>
@@ -44,7 +44,11 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      paddingTop:50,
+    },
+    title:{
+      fontSize: 24,
+      marginBottom: 20
     },
   });
 

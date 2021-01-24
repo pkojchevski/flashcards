@@ -3,13 +3,15 @@ import { View, Text, StyleSheet } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import FormInput from '../components/FormInput';
 import { connect } from 'react-redux'
-
+import { addCardToDeckFunc } from '../actions/deck'
 
 class AddCard extends React.Component {
     state = {
         question:'',
         answer:'',
+
     }
+
 
     onChangeQuestion = (question) => {
        this.setState({question})
@@ -20,7 +22,11 @@ class AddCard extends React.Component {
     }
 
     onSubmit = () => {
+       const { route } = this.props
+       const deckId = route.params.deckId
        const card = { id:Date.now().toISOString, ...this.state}
+       this.props.addCard(deckId, card)
+       this.props.navigation.navigate('DeckManage', {deckId})
     }
 
    render() {
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
 
 
  const mapDispatchToProps = dispatch => ({
-   
+   addCard: (deckId, card) => dispatch(addCardToDeckFunc(deckId, card))
  })
 
 

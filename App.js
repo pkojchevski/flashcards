@@ -14,7 +14,8 @@ import thunk from 'redux-thunk'
 import { applyMiddleware } from 'redux'
 import AddDeck from './screens/AddDeck'
 import logger from 'redux-logger'
-
+import Quiz from './screens/Quiz'
+import QuizResults from './screens/QuizResults'
 
 const Stack = createStackNavigator()
 
@@ -26,6 +27,9 @@ export default function App() {
             <Stack.Screen name="TabsNavigator" component={TabsNavigator}/>
             <Stack.Screen name="DeckManage" component={DeckManage}/>
             <Stack.Screen name="AddDeck" component={AddDeck}/>
+            <Stack.Screen name="AddCard" component={AddCard}/>
+            <Stack.Screen name="Quiz" component={Quiz}/>
+            <Stack.Screen name="QuizResults" component={QuizResults}/>
         </Stack.Navigator>
     </NavigationContainer>
     </Provider>
