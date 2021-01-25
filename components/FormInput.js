@@ -25,16 +25,18 @@ export default FormInput
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
         flexDirection:'row',
+        textAlign:'center',
+        justifyContent:'center',
+        alignItems:"flex-start"
     },
     textInput:{
-        width:"100%",
+        width:"90%",
         padding:10,
         height: 40, 
         borderColor: 'black', 
         borderWidth: 1,
         marginTop:20,
-        marginBottom:20
+
     }
 })

@@ -9,27 +9,40 @@ class AddCard extends React.Component {
     state = {
         question:'',
         answer:'',
-
+        questionIsTyped: false,
+        answerIsTyped: false,
+        submitIsClicked:false
     }
 
 
     onChangeQuestion = (question) => {
-       this.setState({question})
+       this.setState({question, questionIsTyped: true,})
     }
 
     onChangeAnswer = (answer) => {
-        this.setState({answer})
+        this.setState({answer, answerIsTyped: true})
     }
 
     onSubmit = () => {
-       const { route } = this.props
-       const deckId = route.params.deckId
-       const card = { id:Date.now().toISOString, ...this.state}
-       this.props.addCard(deckId, card)
-       this.props.navigation.navigate('DeckManage', {deckId})
+      this.setState({ submitIsClicked:true})
+       const { answerIsTyped, questionIsTyped } = this.state
+
+       if(answerIsTyped && questionIsTyped) {
+        const { route } = this.props
+        const deckId = route.params.deckId
+        const card = { id:Date.now().toISOString, ...this.state}
+        this.props.addCard(deckId, card)
+        this.props.goBack()
+        this.setState({question:'', answer:'',
+                       questionIsTyped: true,
+                       answerIsTyped: true,
+                       disabled:false,
+                     })
+       } 
     }
 
    render() {
+    const { answerIsTyped, questionIsTyped, submitIsClicked } = this.state
        return (
            <View style={styles.container}>
                <FormInput placeholder='Question' onChangeText={this.onChangeQuestion}/>
@@ -37,6 +50,8 @@ class AddCard extends React.Component {
                <CustomButton bgColor="black" onPress={this.onSubmit}>
                     <Text style={{color: 'white'}}>Submit</Text>
                </CustomButton>
+               {!answerIsTyped && submitIsClicked && <Text style={{color:'red'}}>Please type answer</Text>}
+               {!questionIsTyped && submitIsClicked && <Text style={{color:'red'}}>Please type question</Text>}
            </View>
        )
    }
@@ -57,9 +72,11 @@ const styles = StyleSheet.create({
  });
 
 
- const mapDispatchToProps = dispatch => ({
-   addCard: (deckId, card) => dispatch(addCardToDeckFunc(deckId, card))
- })
+ const mapDispatchToProps = (dispatch, {navigation}) => ({
+   addCard: (deckId, card) => dispatch(addCardToDeckFunc(deckId, card)),
+   goBack: () => navigation.goBack()
+  })
+
 
 
 export default connect(null, mapDispatchToProps)(AddCard)

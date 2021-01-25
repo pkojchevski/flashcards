@@ -51,6 +51,7 @@ export const addCardToDeckFunc = (deckId, card) => async (dispatch) => {
    const decks = await addCardToDeckApi(deckId, card)
    console.log(decks)
    dispatch(addCardToDeck(decks))
+   dispatch(getDeck(deckId))
 }
 
 export const addDeckFunc = (deck) => async (dispatch) => {

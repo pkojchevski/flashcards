@@ -3,7 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 import { getDeckFromIdFunc } from '../actions/deck'
 import CustomButton from '../components/CustomButton';
-import { resetScore, addPoints } from '../actions/quiz'
+import { addPoints } from '../actions/quiz'
+import { clearLocalNotification, setLocalNotification } from '../util/notifications'
 
 class Quiz extends React.Component {
 
@@ -22,6 +23,8 @@ state = {
     next = () => {
       if(this.state.counter === this.props.deck.cards.length - 1) {
          this.props.navigation.navigate('QuizResults', {deckId:this.props.deck.id})
+         clearLocalNotification()
+         .then(setLocalNotification)
       } else {
         this.setState(prev => ({
           ...prev, 
@@ -79,7 +82,7 @@ state = {
                </View>
                 )
             : (
-              <Text>
+              <Text style={{padding:10}}>
                 Sorry, You can to take a quiz because there are no cards in the deck
               </Text>
             )

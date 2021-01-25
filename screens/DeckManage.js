@@ -10,12 +10,21 @@ class DeckManage extends React.Component {
 
     componentDidMount() {
         const { route } = this.props
-        console.log('route:', route)
         this.props.getDeck(route.params.deckId)
+
+        this.focusListener = this.props.navigation.addListener('focus', () => {
+            this.props.getDeck(route.params.deckId)
+        });
+
     }
 
+    shouldComponentUpdate (nextProps) {
+        console.log('nextProps')
+        return true
+      }
+
     onPress = (url, deckId) => {
-       this.props.navigation.navigate(`${url}`, {deckId})
+       this.props.navigation.push(`${url}`, {deckId})
     }
 
     removeDeck = (id) => {
@@ -26,7 +35,7 @@ class DeckManage extends React.Component {
 
    render() {
     const {deck} = this.props
-    console.log('deck:', deck)
+    console.log('here')
        return ( 
            <View style={styles.container}>
            <View >

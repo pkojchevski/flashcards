@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Decks from '../screens/Decks'
 import AddDeck from '../screens/AddDeck'
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/AntDesign';
 
 const Tabs = createBottomTabNavigator()
@@ -16,9 +16,9 @@ class TabsNavigator extends React.Component {
                 let iconName;
                 if (route.name === 'Decks') {
                   iconName = focused
-                    ? 'cards'
-                    : 'cards-outline';
-                    return <AntDesign name={iconName} size={size} color={color} />;
+                    ? 'card'
+                    : 'card-outline';
+                    return <Ionicons name={iconName} size={size} color={color} />;
                 } else if (route.name === 'AddDeck') {
                   iconName = focused ? 'plussquare' : 'plussquareo';
                   return <MaterialCommunityIcons name={iconName} size={size} color={color} />;

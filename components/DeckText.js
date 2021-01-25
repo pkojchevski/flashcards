@@ -13,6 +13,7 @@ const DeckText = ({deck}) => {
 const styles = StyleSheet.create({
     container: {
        width:'100%',
+       marginBottom:15
     },
     header: {
       fontSize:24,

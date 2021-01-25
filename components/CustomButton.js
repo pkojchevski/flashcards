@@ -8,6 +8,7 @@ const CustomButton = ({bgColor, children, onPress, disabled }) => {
         style={[styles.button, {backgroundColor:bgColor}]}
         onPress={onPress}
         activeOpacity={disabled ? 1 : 0.7}
+        disabled={disabled}
     >
         {children}
     </TouchableOpacity>
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
         margin: 15,
         borderWidth: 1,
-        borderColor:'black'
+        borderColor: 'black',
     }
 })
 
