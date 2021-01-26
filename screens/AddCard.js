@@ -48,7 +48,7 @@ class AddCard extends React.Component {
                <FormInput placeholder='Question' onChangeText={this.onChangeQuestion}/>
                <FormInput placeholder ='Answer' onChangeText={this.onChangeAnswer}/>
                <CustomButton bgColor="black" onPress={this.onSubmit}>
-                    <Text style={{color: 'white'}}>Submit</Text>
+                    <Text style={{color: 'white', textAlign:'center'}}>Submit</Text>
                </CustomButton>
                {!answerIsTyped && submitIsClicked && <Text style={{color:'red'}}>Please type answer</Text>}
                {!questionIsTyped && submitIsClicked && <Text style={{color:'red'}}>Please type question</Text>}
@@ -64,11 +64,6 @@ const styles = StyleSheet.create({
      alignItems: 'center',
      justifyContent: 'center',
    },
-   button: {
-    alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    padding: 10
-  },
  });
 
 

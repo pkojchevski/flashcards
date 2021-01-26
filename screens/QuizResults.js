@@ -27,12 +27,12 @@ class QuizResults extends React.Component {
        return (
          <View style={styles.container}>
              <View>
-                 <Text>Score:</Text>
-                 <Text>{this.props.score}</Text>
+                 <Text style={styles.textScore}>Score:</Text>
+                 <Text style={styles.score}>{this.props.score}</Text>
              </View>
              <View>
-                 <CustomButton onPress={this.restartQuiz}>
-                     <Text>Restart quiz</Text>
+                 <CustomButton onPress={this.restartQuiz} bgColor="black">
+                     <Text style={{color:'white'}}>Restart quiz</Text>
                  </CustomButton>
                  <CustomButton onPress={this.backToDeck}>
                      <Text>Back to Deck</Text>
@@ -51,6 +51,16 @@ const styles = StyleSheet.create({
      alignItems: 'center',
      justifyContent: 'center',
    },
+   textScore: {
+      fontSize:24,
+      fontWeight:'bold',
+      textAlign:'center'
+   },
+   score:{
+       fontSize:42,
+       fontWeight:'bold',
+       textAlign:'center'
+   }
  });
 
 

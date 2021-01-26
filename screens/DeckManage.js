@@ -18,10 +18,6 @@ class DeckManage extends React.Component {
 
     }
 
-    shouldComponentUpdate (nextProps) {
-        console.log('nextProps')
-        return true
-      }
 
     onPress = (url, deckId) => {
        this.props.navigation.push(`${url}`, {deckId})
@@ -35,7 +31,6 @@ class DeckManage extends React.Component {
 
    render() {
     const {deck} = this.props
-    console.log('here')
        return ( 
            <View style={styles.container}>
            <View >
@@ -44,13 +39,13 @@ class DeckManage extends React.Component {
                </View>)}
             <View>
                 <CustomButton bgColor='white' onPress={() => this.onPress('AddCard', deck.id)}>
-                    <Text>Add Card</Text>
+                    <Text style={{textAlign:'center'}}>Add Card</Text>
                 </CustomButton>
                 <CustomButton bgColor='black' onPress={() => this.onPress('Quiz', deck.id)}>
-                    <Text style={{color:'white'}}>Start Quiz</Text>
+                    <Text style={{color:'white', textAlign:'center'}}>Start Quiz</Text>
                 </CustomButton>
                 <CustomButton bgColor='transparent' onPress={() => this.removeDeck(deck.id)}>
-                    <Text style={{color:'red'}}>Delete Deck</Text>
+                    <Text style={{color:'red', textAlign:'center'}}>Delete Deck</Text>
                 </CustomButton>
              </View>
            </View>

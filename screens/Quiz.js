@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Animated, View, Text, StyleSheet, Easing } from 'react-native';
 import { connect } from 'react-redux'
 import { getDeckFromIdFunc } from '../actions/deck'
 import CustomButton from '../components/CustomButton';
-import { addPoints } from '../actions/quiz'
+import { addPoint } from '../actions/quiz'
 import { clearLocalNotification, setLocalNotification } from '../util/notifications'
 
 class Quiz extends React.Component {
@@ -11,7 +11,20 @@ class Quiz extends React.Component {
 state = {
     counter: 0,
     showAnswer: false,
-    isQuestionAnswered: false
+    isQuestionAnswered: false,
+    animatedValue: new Animated.Value(0)
+}
+
+animate () {
+  this.state.animatedValue.setValue(0)
+  Animated.timing(
+    this.state.animatedValue,
+    {
+      toValue: 1,
+      duration: 200,
+      easing: Easing.linear
+    }
+  ).start(() => this.animate())
 }
 
     componentDidMount() {
@@ -23,8 +36,8 @@ state = {
     next = () => {
       if(this.state.counter === this.props.deck.cards.length - 1) {
          this.props.navigation.navigate('QuizResults', {deckId:this.props.deck.id})
-         clearLocalNotification()
-         .then(setLocalNotification)
+        //  clearLocalNotification()
+        //  .then(setLocalNotification)
       } else {
         this.setState(prev => ({
           ...prev, 
@@ -35,7 +48,7 @@ state = {
     }
 
     setCorrect = () => {
-      this.props.dispatch(addPoints() )
+      this.props.add()
       this.next()
     }
 
@@ -43,13 +56,21 @@ state = {
       this.next()
     }
 
+    showAnswer = () => {
+      this.setState((prev => ({...prev, showAnswer:!prev.showAnswer})))
+      this.animate()
+    }
+
 
 
   render() {
     const { deck } = this.props
     const { cards } = deck
-    const { counter, showAnswer, isQuestionAnswered} = this.state
-
+    const { counter, showAnswer, isQuestionAnswered, animatedValue} = this.state
+    const opacity = animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 1, 0]
+    })
     return (
         <View style={styles.container}>
           {
@@ -68,21 +89,27 @@ state = {
                     </CustomButton>
                   </View>
                   <View>
-                     {showAnswer && (
-                       <Text>{cards[counter].answer}</Text>
-                     )}
-                     <CustomButton onPress={() => this.setState((prev => ({...prev, showAnswer:!prev.showAnswer})))}>
+                    <View>
+                    <Animated.Text style={{opacity,fontSize:24, fontWeight:'bold', textAlign:'center'}}>
+                      {showAnswer && cards[counter].answer}
+                    </Animated.Text>
+                    </View>
+                      
+                     
+                     <CustomButton onPress={this.showAnswer}>
                        <Text style={{color: 'black'}}>{showAnswer ? 'HideAnswer' : 'Show Answer'}</Text>
                      </CustomButton>
                   </View>
                   <CustomButton onPress={this.next} disabled={isQuestionAnswered}> 
                     <Text>Next Question</Text>
                   </CustomButton>
-                     <Text>Remaining questions {cards.length - 1 - counter}</Text>
+                  <View>
+                     <Text style={{textAlign:'center',}}>Remaining questions {cards.length - 1 - counter}</Text>
+                  </View>
                </View>
                 )
             : (
-              <Text style={{padding:10}}>
+              <Text style={{padding:10, textAlign:'center'}}>
                 Sorry, You can to take a quiz because there are no cards in the deck
               </Text>
             )
@@ -111,10 +138,11 @@ const styles = StyleSheet.create({
   },
   questionText:{
     fontSize:24,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    textAlign:'center'
   },
   text: {
-    textAlign:'center'
+      alignItems:'center'
   }
 })
 
@@ -125,6 +153,7 @@ const mapStateToProps = ({deck}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
      getDeck: (id) => dispatch(getDeckFromIdFunc(id)),
+     add: () => dispatch(addPoint())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz)

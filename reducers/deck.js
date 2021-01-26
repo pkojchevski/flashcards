@@ -17,7 +17,6 @@ export const deck = (state={decks:{}, deck:null}, action)  => {
                 }
             }
         case GET_DECK_FROM_ID: 
-        console.log('payload:',action.payload)
             return {
                 ...state,
                 deck:action.payload
@@ -30,6 +29,7 @@ export const deck = (state={decks:{}, deck:null}, action)  => {
        case REMOVE_DECK:
            return {
               ...state,
+              deck:null,
               decks:deleteDeck(action.payload, state.decks)
            }
         default:

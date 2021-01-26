@@ -17,6 +17,7 @@
 
   renderItem = ({ item }) => (
     <TouchableOpacity
+    key={item.id}
     onPress={() => this.onPress(item.id)}
     >
       <DeckText deck={item}/>
@@ -27,14 +28,13 @@
       const { decks } = this.props
       console.log('decks:', decks)
         return (
-          <SafeAreaView style={styles.container}>
-          
+          <SafeAreaView style={styles.container}>    
           <FlatList
             data={decks}
             renderItem={this.renderItem}
             keyExtractor={item => item.id}
           />
-           {!decks && (<Text style={styles.noDecksText}>
+           {decks.length === 0 && (<Text style={styles.noDecksText}>
             There is no Deck created, please create the first one
            </Text>)}
            
@@ -69,6 +69,7 @@
   })
 
   const mapStateToProps = ({deck}) => {
+    console.log('deck:', deck)
     return {
       decks: deck.decks ? Object.values(deck.decks) : null
   }

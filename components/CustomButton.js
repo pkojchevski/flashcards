@@ -1,14 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 
-const CustomButton = ({bgColor, children, onPress, disabled }) => {
-  console.log('disabled:', disabled)
+const CustomButton = ({bgColor, children, onPress }) => {
   return (
     <TouchableOpacity
         style={[styles.button, {backgroundColor:bgColor}]}
         onPress={onPress}
-        activeOpacity={disabled ? 1 : 0.7}
-        disabled={disabled}
     >
         {children}
     </TouchableOpacity>
@@ -24,6 +21,8 @@ const styles = StyleSheet.create({
         margin: 15,
         borderWidth: 1,
         borderColor: 'black',
+        textAlign:'center',
+        alignItems:'center'
     }
 })
 
