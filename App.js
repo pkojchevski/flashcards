@@ -2,7 +2,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './navigation/StackNavigator'
 import TabsNavigator from './navigation/TabsNavigator'
 import DeckManage from './screens/DeckManage'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -47,7 +46,6 @@ class App extends React.Component {
                 open: config,
                 close: config,
               },
-
               
             }}
           >

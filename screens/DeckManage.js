@@ -70,9 +70,7 @@ const styles = StyleSheet.create({
  });
 
  const mapDispatchToProps = (dispatch, {navigation}) => ({
-    //  delete: cardId => dispatch(removeDeck(cardId)),
     getDeck: id => dispatch(getDeckFromIdFunc(id)),
-    //  back: navigation.goBack()
     removeDeck: id => dispatch(removeDeckFunc(id))
  })
 

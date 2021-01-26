@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text} from 'react-native'
 import { connect } from 'react-redux'
-import { addPoints, resetScore } from '../actions/quiz'
+import { resetScore } from '../actions/quiz'
 import CustomButton from '../components/CustomButton'
 
 class QuizResults extends React.Component {

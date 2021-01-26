@@ -1,9 +1,8 @@
 import React from 'react';
 import { Animated, View, Text, StyleSheet, Easing } from 'react-native';
 import { connect } from 'react-redux'
-import { getDeckFromIdFunc } from '../actions/deck'
 import CustomButton from '../components/CustomButton';
-import { addPoint } from '../actions/quiz'
+import { addPoint, resetScore } from '../actions/quiz'
 import { clearLocalNotification, setLocalNotification } from '../util/notifications'
 
 class Quiz extends React.Component {
@@ -12,25 +11,36 @@ state = {
     counter: 0,
     showAnswer: false,
     isQuestionAnswered: false,
-    animatedValue: new Animated.Value(0)
+    fadeAnim: new Animated.Value(0)
 }
 
-animate () {
-  this.state.animatedValue.setValue(0)
-  Animated.timing(
-    this.state.animatedValue,
-    {
-      toValue: 1,
-      duration: 200,
-      easing: Easing.linear
-    }
-  ).start(() => this.animate())
-}
+fadeIn = () => {
+  // Will change fadeAnim value to 1 in 5 seconds
+  Animated.timing(this.state.fadeAnim, {
+    toValue: 1,
+    duration: 500,
+    useNativeDriver: true 
+  }).start();
+};
+
+fadeOut = () => {
+  Animated.timing(this.state.fadeAnim, {
+    toValue: 0,
+    duration: 500,
+    useNativeDriver: true 
+  }).start();
+};
 
     componentDidMount() {
-      const { route } = this.props
-      const deckId = route.params.deckId
-      this.props.getDeck(deckId)
+      this.fadeIn()
+      this.focusListener = this.props.navigation.addListener('focus', () => {
+        this.props.reset()
+        this.setState({
+          counter: 0,
+          showAnswer: false,
+          isQuestionAnswered: false,
+        })
+    });
     }
 
     next = () => {
@@ -49,16 +59,20 @@ animate () {
 
     setCorrect = () => {
       this.props.add()
+      this.setState({showAnswer:false})
       this.next()
     }
 
     setIncorrect = () => {
+      this.setState({showAnswer:false})
       this.next()
     }
 
     showAnswer = () => {
+      const {showAnswer} = this.state
+      
       this.setState((prev => ({...prev, showAnswer:!prev.showAnswer})))
-      this.animate()
+      showAnswer ? this.fadeOut() : this.fadeIn()
     }
 
 
@@ -66,11 +80,7 @@ animate () {
   render() {
     const { deck } = this.props
     const { cards } = deck
-    const { counter, showAnswer, isQuestionAnswered, animatedValue} = this.state
-    const opacity = animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 1, 0]
-    })
+    const { counter, showAnswer, isQuestionAnswered } = this.state
     return (
         <View style={styles.container}>
           {
@@ -78,7 +88,7 @@ animate () {
                 <View>
                   <View style={styles.text}>
                     <Text style={styles.questionText}>Question:</Text>
-                    <Text style={{fontSize:20}}>{cards[counter].question}</Text>
+                    <Animated.Text style={{fontSize:20, opacity:this.state.fadeAnim}}>{cards[counter].question}</Animated.Text>
                   </View>
                   <View style={styles.buttons}>
                     <CustomButton onPress={this.setCorrect} bgColor="green" style={{width:'50%'}}>
@@ -90,21 +100,22 @@ animate () {
                   </View>
                   <View>
                     <View>
-                    <Animated.Text style={{opacity,fontSize:24, fontWeight:'bold', textAlign:'center'}}>
+                    <Animated.Text 
+                      style={{opacity: this.state.fadeAnim,fontSize:24, fontWeight:'bold', textAlign:'center'}}>
                       {showAnswer && cards[counter].answer}
                     </Animated.Text>
                     </View>
                       
                      
                      <CustomButton onPress={this.showAnswer}>
-                       <Text style={{color: 'black'}}>{showAnswer ? 'HideAnswer' : 'Show Answer'}</Text>
+                       <Text style={{color: 'black'}}>{showAnswer ? 'Hide Answer' : 'Show Answer'}</Text>
                      </CustomButton>
                   </View>
                   <CustomButton onPress={this.next} disabled={isQuestionAnswered}> 
                     <Text>Next Question</Text>
                   </CustomButton>
                   <View>
-                     <Text style={{textAlign:'center',}}>Remaining questions {cards.length - 1 - counter}</Text>
+                     <Text style={{textAlign:'center',fontSize:24}}>{counter} / {cards.length-1}</Text>
                   </View>
                </View>
                 )
@@ -152,8 +163,8 @@ const mapStateToProps = ({deck}) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-     getDeck: (id) => dispatch(getDeckFromIdFunc(id)),
-     add: () => dispatch(addPoint())
+     add: () => dispatch(addPoint()),
+     reset: () => dispatch(resetScore())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz)
