@@ -42,11 +42,11 @@ class AddCard extends React.Component {
     }
 
    render() {
-    const { answerIsTyped, questionIsTyped, submitIsClicked } = this.state
+    const { answerIsTyped, questionIsTyped, submitIsClicked, question, answer } = this.state
        return (
            <View style={styles.container}>
-               <FormInput placeholder='Question' onChangeText={this.onChangeQuestion}/>
-               <FormInput placeholder ='Answer' onChangeText={this.onChangeAnswer}/>
+               <FormInput placeholder='Question' onChangeText={this.onChangeQuestion} value={question}/>
+               <FormInput placeholder ='Answer' onChangeText={this.onChangeAnswer} value={answer}/>
                <CustomButton bgColor="black" onPress={this.onSubmit}>
                     <Text style={{color: 'white', textAlign:'center'}}>Submit</Text>
                </CustomButton>

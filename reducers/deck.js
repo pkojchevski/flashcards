@@ -9,11 +9,12 @@ export const deck = (state={decks:{}, deck:null}, action)  => {
             decks: action.payload
         }
         case ADD_DECK: 
+        console.log({...action.payload})
             return {
                 ...state,
                 decks: {
                     ...state.decks,
-                    ...action.payload
+                    [action.payload.id]: action.payload
                 }
             }
         case GET_DECK_FROM_ID: 
@@ -24,7 +25,11 @@ export const deck = (state={decks:{}, deck:null}, action)  => {
         case ADD_CARD_TO_DECK: 
            return {
                ...state,
-               decks:action.payload
+               deck:action.payload,
+               decks: {
+                   ...state.decks,
+                   [action.payload.id]: action.payload
+               }
            }
        case REMOVE_DECK:
            return {

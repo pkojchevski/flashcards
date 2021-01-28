@@ -29,12 +29,6 @@ const getDecks = decks => ({
     payload: decks
 })
 
-
-const getDeck = deckName => ({
-    type: GET_DECK,
-    payload:deckName
-})
-
 const getDeckFromId = deck => ({
     type: GET_DECK_FROM_ID,
     payload:deck
@@ -43,7 +37,7 @@ const getDeckFromId = deck => ({
 export const addCardToDeckFunc = (deckId, card) => async (dispatch) => {
    const decks = await addCardToDeckApi(deckId, card)
    dispatch(addCardToDeck(decks))
-   dispatch(getDeck(deckId))
+//    dispatch(getDeckFromId(deckId))
 }
 
 export const addDeckFunc = (deck) => async (dispatch) => {

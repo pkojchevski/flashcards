@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import TabsNavigator from './navigation/TabsNavigator'
 import DeckManage from './screens/DeckManage'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
 import AddCard from './screens/AddCard';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
@@ -18,17 +18,7 @@ import QuizResults from './screens/QuizResults'
 import { setLocalNotification } from './util/notifications';
 
 const Stack = createStackNavigator()
-const config = {
-  animation: 'spring',
-  config: {
-    stiffness: 1000,
-    damping: 50,
-    mass: 3,
-    overshootClamping: false,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
+
 
 class App extends React.Component {
   componentDidMount() {
@@ -42,11 +32,7 @@ class App extends React.Component {
             screenOptions= {{
               gestureHandler: true,
               gestureDirections: 'horizontal',
-              transitionSpec: {
-                open: config,
-                close: config,
-              },
-              
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
             }}
           >
               <Stack.Screen name="TabsNavigator" component={TabsNavigator}/>

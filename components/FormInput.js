@@ -2,11 +2,10 @@ import React , { useState } from 'react';
 import { TextInput, StyleSheet, View } from 'react-native';
 
 
-const FormInput = ({ onChangeText, placeholder}) => {
-    const [value, setValue] = useState('')
+const FormInput = ({ onChangeText, placeholder, value}) => {
+
 
     const handleChange = (val) => {
-       setValue(val)
        onChangeText(val)
     }
   return (

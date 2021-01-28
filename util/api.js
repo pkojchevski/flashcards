@@ -34,14 +34,12 @@ export const getDeckFromIdApi = async (deckId) => {
    const decks =  await AsyncStorage.getItem(DECKS_STORAGE_KEY)
      let data = JSON.parse(decks)
      data[deckId].cards.push(card)
-     console.log(data[deckId])
      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
-     return data
+     return data[deckId]
 }
 
 export const deleteDeck = (deckId, decks) => {
    let {[deckId]:onsubmit, ...rest} = decks
-   console.log('rest:', rest)
    return rest
 }
 

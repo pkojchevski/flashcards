@@ -32,11 +32,14 @@
           <FlatList
             data={decks}
             renderItem={this.renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => {
+              return item.id;
+            }}
+          
           />
-           {decks.length === 0 && (<Text style={styles.noDecksText}>
+           {decks && decks.length === 0 && (<Text style={styles.noDecksText}>
             There is no Deck created, please create the first one
-           </Text>)}
+           </Text>)} 
            
         </SafeAreaView>
 
@@ -53,12 +56,11 @@
       justifyContent: 'center',
     },
     noDecksText: {
-      alignSelf: 'center',
       fontSize:22,
       color:'black',
-      marginBottom:'70%',
       padding:10,
-      textAlign:'center'
+      textAlign:'center',
+      marginBottom:350
     }
   });
 
@@ -69,9 +71,8 @@
   })
 
   const mapStateToProps = ({deck}) => {
-    console.log('deck:', deck)
     return {
-      decks: deck.decks ? Object.values(deck.decks) : null
+      decks: deck.decks ? Object.values(deck.decks) : []
   }
 }
 
