@@ -9,7 +9,6 @@ export const deck = (state={decks:{}, deck:null}, action)  => {
             decks: action.payload
         }
         case ADD_DECK: 
-        console.log({...action.payload})
             return {
                 ...state,
                 decks: {

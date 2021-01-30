@@ -15,7 +15,7 @@ class QuizResults extends React.Component {
  }
 
  backToDeck = () => {
-     this.props.navigation.navigate('DeckManage', {deckId:this.state.deckId})
+     this.props.navigation.navigate('Deck Manage', {deckId:this.state.deckId})
  }
 
  restartQuiz = () => {

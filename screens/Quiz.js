@@ -26,13 +26,13 @@ fadeIn = () => {
 fadeOut = () => {
   Animated.timing(this.state.fadeAnim, {
     toValue: 0,
-    duration: 500,
+    duration: 300,
     useNativeDriver: true 
   }).start();
 };
 
     componentDidMount() {
-      this.fadeIn()
+      this.fadeOut()
       this.focusListener = this.props.navigation.addListener('focus', () => {
         this.props.reset()
         this.setState({
@@ -45,7 +45,7 @@ fadeOut = () => {
 
     next = () => {
       if(this.state.counter === this.props.deck.cards.length - 1) {
-         this.props.navigation.navigate('QuizResults', {deckId:this.props.deck.id})
+         this.props.navigation.navigate('Quiz Results', {deckId:this.props.deck.id})
         //  clearLocalNotification()
         //  .then(setLocalNotification)
       } else {
@@ -58,19 +58,21 @@ fadeOut = () => {
     }
 
     setCorrect = () => {
-      this.props.add()
+      this.fadeOut();
       this.setState({showAnswer:false})
-      this.next()
+      this.props.add()
+   
+      setTimeout(() => this.next(),500)
     }
 
     setIncorrect = () => {
+      this.fadeOut();
       this.setState({showAnswer:false})
-      this.next()
+      setTimeout(() => this.next(),500)
     }
 
-    showAnswer = () => {
+    show = () => {
       const {showAnswer} = this.state
-      
       this.setState((prev => ({...prev, showAnswer:!prev.showAnswer})))
       showAnswer ? this.fadeOut() : this.fadeIn()
     }
@@ -88,7 +90,7 @@ fadeOut = () => {
                 <View>
                   <View style={styles.text}>
                     <Text style={styles.questionText}>Question:</Text>
-                    <Animated.Text style={{fontSize:20, opacity:this.state.fadeAnim}}>{cards[counter].question}</Animated.Text>
+                    <Animated.Text style={{fontSize:20}}>{cards[counter].question}</Animated.Text>
                   </View>
                   <View style={styles.buttons}>
                     <CustomButton onPress={this.setCorrect} bgColor="green" style={{width:'50%'}}>
@@ -102,12 +104,10 @@ fadeOut = () => {
                     <View>
                     <Animated.Text 
                       style={{opacity: this.state.fadeAnim,fontSize:24, fontWeight:'bold', textAlign:'center'}}>
-                      {showAnswer && cards[counter].answer}
+                      {cards[counter].answer}
                     </Animated.Text>
                     </View>
-                      
-                     
-                     <CustomButton onPress={this.showAnswer}>
+                     <CustomButton onPress={this.show}>
                        <Text style={{color: 'black'}}>{showAnswer ? 'Hide Answer' : 'Show Answer'}</Text>
                      </CustomButton>
                   </View>
@@ -115,7 +115,7 @@ fadeOut = () => {
                     <Text>Next Question</Text>
                   </CustomButton>
                   <View>
-                     <Text style={{textAlign:'center',fontSize:24}}>{counter} / {cards.length-1}</Text>
+                     <Text style={{textAlign:'center',fontSize:24}}>{counter+1} / {cards.length}</Text>
                   </View>
                </View>
                 )

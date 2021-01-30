@@ -12,16 +12,15 @@ class DeckManage extends React.Component {
         const { route } = this.props
         this.props.getDeck(route.params.deckId)
 
-        this.focusListener = this.props.navigation.addListener('focus', () => {
-            this.props.getDeck(route.params.deckId)
-        });
-
     }
+
 
 
     onPress = (url, deckId) => {
        this.props.navigation.push(`${url}`, {deckId})
     }
+    
+
 
     removeDeck = (id) => {
        this.props.removeDeck(id)
@@ -38,7 +37,7 @@ class DeckManage extends React.Component {
                 <DeckText deck={deck} />
                </View>)}
             <View>
-                <CustomButton bgColor='white' onPress={() => this.onPress('AddCard', deck.id)}>
+                <CustomButton bgColor='white' onPress={() => this.onPress('Add Card', deck.id)}>
                     <Text style={{textAlign:'center'}}>Add Card</Text>
                 </CustomButton>
                 <CustomButton bgColor='black' onPress={() => this.onPress('Quiz', deck.id)}>
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
      backgroundColor: '#fff',
      alignItems: 'center',
      justifyContent: 'center',
+
    },
    button: {
     alignItems: "center",

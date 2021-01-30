@@ -26,7 +26,7 @@ class AddDeck extends React.Component {
     if(this.state.deckName !== '') {
       this.props.addNewDeck(deck)
       this.setState({disabled:false, deckName:''})
-      this.props.navigation.navigate('DeckManage', {deckId: id})
+      this.props.navigation.navigate('Deck Manage', {deckId: id})
       
     } else {
       this.setState({disabled:true})

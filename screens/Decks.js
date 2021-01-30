@@ -12,7 +12,7 @@
   }
 
   onPress = (deckId) => {
-    this.props.navigation.navigate('DeckManage', {deckId})
+    this.props.navigation.navigate('Deck Manage', {deckId})
   }
 
   renderItem = ({ item }) => (
@@ -26,7 +26,6 @@
 
     render() {
       const { decks } = this.props
-      console.log('decks:', decks)
         return (
           <SafeAreaView style={styles.container}>    
           <FlatList
@@ -35,7 +34,7 @@
             keyExtractor={(item) => {
               return item.id;
             }}
-          
+            style={{width:'100%'}}
           />
            {decks && decks.length === 0 && (<Text style={styles.noDecksText}>
             There is no Deck created, please create the first one
