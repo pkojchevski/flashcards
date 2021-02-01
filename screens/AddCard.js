@@ -14,7 +14,7 @@ class AddCard extends React.Component {
         submitIsClicked:false
     }
 
-
+aq
     onChangeQuestion = (question) => {
        this.setState({question, questionIsTyped: true,})
     }
